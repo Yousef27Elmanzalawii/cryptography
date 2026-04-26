@@ -36,16 +36,24 @@ dependencies:
   cupertino_icons: ^1.0.8
   google_fonts: ^8.0.2
   cryptography: ^2.9.0
+  carousel_slider: ^5.1.2
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
   flutter_launcher_icons: "^0.14.4"
-
+  names_launcher: ^0.0.2
+  flutter_test:
+     sdk: flutter
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/CrptoImg/2026-04-13 07.36.58.jpg"
+names_launcher:
+  name: "Cipherium"
+  platforms:
+    android:
+      enable: true
+    ios:
+      enable: true
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your

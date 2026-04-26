@@ -26,7 +26,7 @@ class CardWidget extends StatelessWidget {
             width: double.infinity,
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(15),
+                top: Radius.circular(16),
               ),
               image: DecorationImage(
                 fit: BoxFit.cover,
@@ -51,7 +51,7 @@ class CardWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Appcolors.primaryColor,
                 borderRadius: const BorderRadius.vertical(
-                  bottom: Radius.circular(15),
+                  bottom: Radius.circular(16),
                 ),
               ),
               child: Center(
