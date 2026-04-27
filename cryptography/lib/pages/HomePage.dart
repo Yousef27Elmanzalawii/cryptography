@@ -72,7 +72,7 @@ class _HomepageState extends State<Homepage> {
             CircleAvatar(
               radius: 90,
               backgroundImage: AssetImage(
-                "assets/CrptoImg/2026-04-13 07.36.58.jpg",
+                "assets/CrptoImg/CipheriumEdited.jpg",
               ),
             ),
             SizedBox(height: 5),

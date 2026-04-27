@@ -30,7 +30,14 @@ class HomeContent extends StatelessWidget {
                   ),
                 );
               },
-              options: CarouselOptions(height: 170, autoPlay: true),
+              options: CarouselOptions(
+                height: 170,
+                autoPlay: true,
+                autoPlayInterval: Duration(seconds: 4),
+                autoPlayAnimationDuration: Duration(seconds: 4),
+                enlargeCenterPage: true,
+                autoPlayCurve: Curves.decelerate,
+              ),
             ),
           ),
         ),

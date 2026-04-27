@@ -35,7 +35,7 @@ class _SplashscreenState extends State<Splashscreen> {
           SizedBox(height: 180),
           Center(
             child: Image.asset(
-              "assets/CrptoImg/dddc74eccdec0c0e916565c660ef088f-removebg-preview.png",
+              "assets/CrptoImg/RealCipheruim.png",
               color: Color(0xff34D399),
               width: 250,
             ),
