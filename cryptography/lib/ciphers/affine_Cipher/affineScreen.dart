@@ -140,9 +140,9 @@ class _AffinescreenState extends State<Affinescreen> {
                             if (int.parse(value) < 0) {
                               return "key must be positive";
                             }
-                            if (modInverse(int.parse(value), 26) == -1) {
-                              return "Key a is invalid (no inverse mod 26)";
-                            }
+                            // if (modInverse(int.parse(value), 26) == -1) {
+                            //   return "Key a is invalid (no inverse mod 26)";
+                            // }
 
                             return null;
                           },

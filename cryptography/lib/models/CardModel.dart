@@ -1,6 +1,7 @@
 import 'package:Cipherium/ciphers/Columnar_Cipher/ColumnarScreen.dart';
 import 'package:Cipherium/ciphers/Hill_cipher/HillScreen.dart';
 import 'package:Cipherium/ciphers/Otp_Cipher/OtpScreen.dart';
+import 'package:Cipherium/ciphers/RSA_Cipher/RSAscreen.dart';
 import 'package:Cipherium/ciphers/RailFence_Cipher/RailFenceScreen.dart';
 import 'package:Cipherium/ciphers/affine_Cipher/affineScreen.dart';
 import 'package:Cipherium/ciphers/caesar_Cipher/Ceaserscreen.dart';
@@ -54,6 +55,11 @@ class cardModel {
       image: "assets/CrptoImg/columnartransapostiton.png",
       title: "Columnar Transposition",
       page: Columnarscreen(),
+    ),
+    cardModel(
+      image: "assets/CrptoImg/RSA.png",
+      title: "RSA Cipher",
+      page: Rsascreen(),
     ),
   ];
 }
