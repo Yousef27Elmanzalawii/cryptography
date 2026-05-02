@@ -1,16 +1,17 @@
-import 'package:Cipherium/ciphers/Otp_Cipher/OtpCipher.dart';
+import 'package:Cipherium/ciphers/RailFence_Cipher/RailFenceCipher.dart';
 import 'package:Cipherium/models/AppColors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Otpscreen extends StatefulWidget {
-  const Otpscreen({super.key});
+class HillThreeScreen extends StatefulWidget {
+  const HillThreeScreen({super.key});
 
   @override
-  State<Otpscreen> createState() => _OtpscreenState();
+  State<HillThreeScreen> createState() => _HillThreeScreenState();
 }
 
-class _OtpscreenState extends State<Otpscreen> {
+class _HillThreeScreenState extends State<HillThreeScreen> {
+  @override
   final _formKey = GlobalKey<FormState>();
 
   final textController = TextEditingController();
@@ -18,6 +19,7 @@ class _OtpscreenState extends State<Otpscreen> {
   final keyController = TextEditingController();
 
   String result = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +30,7 @@ class _OtpscreenState extends State<Otpscreen> {
         automaticallyImplyLeading: false,
         backgroundColor: Appcolors.backgroundColor,
         title: Text(
-          "OTP Cipher",
+          "Hill Cipher",
           style: GoogleFonts.spaceMono(
             color: Appcolors.primaryColor,
             fontWeight: FontWeight.bold,
@@ -53,11 +55,11 @@ class _OtpscreenState extends State<Otpscreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
-                    "The One-Time Pad (OTP) Cipher is a method of encryption that uses a completely random key of the same length as the message. Each letter in the text is shifted using a unique key letter, making it theoretically unbreakable when used correctly.\n\n"
-                    "Encryption:\nE(xᵢ) = (xᵢ + kᵢ) mod 26\n"
-                    "Decryption:\nD(xᵢ) = (xᵢ - kᵢ) mod 26\n\n"
-                    "Each letter is converted to a number (0–25), and the key must be truly random and never reused. Unlike the Vigenère Cipher, the key is not repeated and must match the message length exactly.\n\n"
-                    "When all conditions are satisfied, the OTP Cipher provides perfect security, meaning it cannot be broken even with unlimited computational power.",
+                    "The Rail Fence Cipher is a type of transposition cipher that rearranges the characters of the plaintext by writing them in a zigzag pattern across multiple rows (rails). Unlike substitution ciphers, it does not change the letters themselves but only their positions.\n\n"
+                    "Encryption:\nThe plaintext is written diagonally down and up across a fixed number of rails, then read row by row to produce the ciphertext.\n\n"
+                    "Decryption:\nThe zigzag pattern is reconstructed based on the number of rails, and the characters are placed accordingly to recover the original message.\n\n"
+                    "Key:\nThe key (k) represents the number of rails used in the zigzag pattern.\n\n"
+                    "Although simple and easy to implement, the Rail Fence Cipher is not secure for modern use because the pattern can be easily detected and reversed.",
                     style: GoogleFonts.spaceMono(
                       color: Colors.white,
                       height: 1.5,
@@ -93,9 +95,6 @@ class _OtpscreenState extends State<Otpscreen> {
                       if (value == null || value.isEmpty) {
                         return "Please enter text";
                       }
-                      if (!RegExp(r'^[a-zA-Z]+$').hasMatch(value)) {
-                        return "Text must contain letters only";
-                      }
                       return null;
                     },
                   ),
@@ -118,17 +117,16 @@ class _OtpscreenState extends State<Otpscreen> {
                         borderSide: BorderSide(color: Appcolors.primaryColor),
                       ),
                     ),
-                    keyboardType: TextInputType.text,
+                    keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Please enter key";
                       }
-                      if (!RegExp(r'^[a-zA-Z]+$').hasMatch(value)) {
-                        return "Key must contain letters only";
+                      if (int.tryParse(value) == null) {
+                        return "Key must be a number";
                       }
-                      if (textController.text.isNotEmpty &&
-                          value.length != textController.text.length) {
-                        return "Key Must be same length";
+                      if (int.parse(value) < 0) {
+                        return "key must be positive";
                       }
 
                       return null;
@@ -152,9 +150,10 @@ class _OtpscreenState extends State<Otpscreen> {
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             setState(() {
-                              result = encryptOTP(
+                              int key = int.parse(keyController.text);
+                              result = encryptRailFence(
                                 textController.text,
-                                keyController.text,
+                                key,
                               );
                             });
                           }
@@ -180,9 +179,10 @@ class _OtpscreenState extends State<Otpscreen> {
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             setState(() {
-                              result = decryptOTP(
+                              int key = int.parse(keyController.text);
+                              result = decryptRailFence(
                                 textController.text,
-                                keyController.text,
+                                key,
                               );
                             });
                           }
