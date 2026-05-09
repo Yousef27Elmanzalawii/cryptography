@@ -11,7 +11,6 @@ class Railfencescreen extends StatefulWidget {
 }
 
 class _RailfencescreenState extends State<Railfencescreen> {
-  @override
   final _formKey = GlobalKey<FormState>();
 
   final textController = TextEditingController();
