@@ -52,23 +52,30 @@ class _HashscreenState extends State<Hashscreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
-                    "The Hash Cipher (Hash Function) is a cryptographic technique that converts input data (plaintext) into a fixed-size string of characters, which appears random.\n\n"
-                    "Unlike encryption, hashing is a one-way process, meaning it cannot be reversed to retrieve the original input.\n\n"
+                    "The SHA-256 Hash Algorithm is a secure cryptographic hash function that converts any input data into a fixed 256-bit (64 hexadecimal characters) hash value.\n\n"
+                    "SHA-256 belongs to the SHA-2 family designed by the National Security Agency (NSA) and is widely used in cybersecurity, blockchain, and password protection.\n\n"
+                    "Unlike encryption, SHA-256 is a one-way function, meaning the original message cannot be recovered from the hash.\n\n"
                     "Purpose:\n"
-                    "It is used to verify data integrity, store passwords securely, and ensure that data has not been altered.\n\n"
+                    "It is used for password storage, digital signatures, blockchain systems, certificates, and verifying file integrity.\n\n"
                     "Process:\n"
-                    "1. Input data (message) is fed into a hash function.\n"
-                    "2. The function processes the data using mathematical operations.\n"
-                    "3. A fixed-length output called a hash value or digest is produced.\n\n"
+                    "1. The input message is converted into binary.\n"
+                    "2. The message is padded to fit 512-bit blocks.\n"
+                    "3. SHA-256 performs multiple rounds of bitwise operations and compression.\n"
+                    "4. A unique 256-bit hash value is generated.\n\n"
                     "Hash Equation (conceptual):\n"
-                    "H = hash(message)\n\n"
+                    "H = SHA256(message)\n\n"
+                    "Example:\n"
+                    "Input: HELLO\n"
+                    "Output:\n"
+                    "3733cd977ff8eb18b987357e22ced99f46097f31ecb239e878ae63760e83e4d5\n\n"
                     "Properties:\n"
-                    "- Deterministic: same input always produces the same output\n"
-                    "- One-way: cannot retrieve original message from hash\n"
-                    "- Fixed length output regardless of input size\n"
-                    "- Avalanche effect: small change in input causes large change in output\n\n"
+                    "- Deterministic: same input always gives the same hash\n"
+                    "- One-way: original data cannot be recovered\n"
+                    "- Fixed output length: always 256 bits\n"
+                    "- Avalanche effect: tiny input changes create huge output differences\n"
+                    "- Collision resistant: extremely difficult for two inputs to produce the same hash\n\n"
                     "Security:\n"
-                    "Strong hash functions are resistant to collisions, where two different inputs produce the same hash.",
+                    "SHA-256 is considered highly secure and is commonly used in Bitcoin, SSL certificates, and modern authentication systems.",
                     style: GoogleFonts.spaceMono(
                       color: Colors.white,
                       height: 1.5,
@@ -122,7 +129,7 @@ class _HashscreenState extends State<Hashscreen> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         setState(() {
-                          result = HashCipher.encryptHash(textController.text);
+                          result = SHA256Hash.hash(textController.text);
                         });
                       }
                       ;
@@ -184,7 +191,7 @@ class _HashscreenState extends State<Hashscreen> {
                       style: GoogleFonts.spaceMono(
                         color: Colors.white,
                         height: 1.5,
-                        fontSize: 20,
+                        fontSize: 15,
                       ),
                     ),
                   ),

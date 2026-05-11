@@ -1,16 +1,12 @@
-class HashCipher {
-  static String encryptHash(String input) {
-    input = input.toUpperCase().replaceAll(RegExp(r'[^A-Z0-9]'), '');
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
 
-    int hash = 0;
-    int prime = 31;
+class SHA256Hash {
+  static String hash(String text) {
+    final bytes = utf8.encode(text);
 
-    for (int i = 0; i < input.length; i++) {
-      int value = input.codeUnitAt(i);
+    final digest = sha256.convert(bytes);
 
-      hash = (hash * prime + value) % 1000000007;
-    }
-
-    return hash.toString();
+    return digest.toString();
   }
 }

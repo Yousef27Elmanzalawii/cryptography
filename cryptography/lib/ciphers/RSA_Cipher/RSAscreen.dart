@@ -17,6 +17,7 @@ class _RSAscreenState extends State<RSAscreen> {
 
   final keyController = TextEditingController();
   final keyController2 = TextEditingController();
+  final keyContoroller3 = TextEditingController();
 
   RSA? rsa;
 
@@ -58,11 +59,30 @@ class _RSAscreenState extends State<RSAscreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
-                    "The Affine Cipher is a classical encryption method that uses both multiplication and addition to transform each letter in a message. Unlike the Caesar Cipher, which uses a single shift, it applies two keys to make the encryption more complex.\n\n"
-                    "Encryption:\nE(x) = (a x + b) mod 26\n"
-                    "Decryption:\nD(x) = a⁻¹(x - b) mod 26\n\n"
-                    "Each letter is converted to a number (0–25), then processed using the keys 'a' and 'b'. The value of 'a' must be coprime with 26 to ensure it has a modular inverse, which is required for decryption.\n\n"
-                    "While more secure than simple substitution ciphers, it can still be broken using basic cryptanalysis techniques.",
+                    "The RSA Cipher is an asymmetric cryptographic algorithm that uses two keys: a public key for encryption and a private key for decryption.\n\n"
+                    "Encryption:\n"
+                    "C = M^e mod n\n\n"
+                    "Decryption:\n"
+                    "M = C^d mod n\n\n"
+                    "Where:\n"
+                    "p, q = two large prime numbers\n"
+                    "n = p × q (modulus)\n"
+                    "φ(n) = (p − 1)(q − 1)\n"
+                    "e = public exponent (1 < e < φ(n))\n"
+                    "d = private key such that (e × d) mod φ(n) = 1\n\n"
+                    "Key Generation:\n"
+                    "1. Choose two prime numbers p and q\n"
+                    "2. Compute n = p × q\n"
+                    "3. Compute φ(n) = (p − 1)(q − 1)\n"
+                    "4. Choose e such that gcd(e, φ(n)) = 1\n"
+                    "5. Compute d = modular inverse of e mod φ(n)\n\n"
+                    "Encryption Process:\n"
+                    "Each character of the plaintext is converted into a numeric value M.\n"
+                    "Then encryption is applied using C = M^e mod n.\n\n"
+                    "Decryption Process:\n"
+                    "Each ciphertext value C is decrypted using M = C^d mod n to retrieve the original message.\n\n"
+                    "Security:\n"
+                    "The security of RSA depends on the difficulty of factoring large prime numbers to retrieve p and q from n.",
                     style: GoogleFonts.spaceMono(
                       color: Colors.white,
                       height: 1.5,
@@ -115,7 +135,7 @@ class _RSAscreenState extends State<RSAscreen> {
 
                           decoration: InputDecoration(
                             errorMaxLines: 2,
-                            labelText: "First Key",
+                            labelText: "P Key",
                             labelStyle: GoogleFonts.spaceMono(
                               color: Colors.white,
                             ),
@@ -145,9 +165,9 @@ class _RSAscreenState extends State<RSAscreen> {
                             if (int.parse(value) < 0) {
                               return "key must be positive";
                             }
-                            // if (!isPrime(BigInt.parse(value))) {
-                            //   return "Key must be prime number";
-                            // }
+                            if (!RSA.isPrime(int.parse(value))) {
+                              return "Q must be prime";
+                            }
 
                             return null;
                           },
@@ -161,7 +181,7 @@ class _RSAscreenState extends State<RSAscreen> {
                           cursorColor: Appcolors.primaryColor,
 
                           decoration: InputDecoration(
-                            labelText: "Second Key",
+                            labelText: "Q Key",
                             labelStyle: GoogleFonts.spaceMono(
                               color: Colors.white,
                             ),
@@ -190,15 +210,52 @@ class _RSAscreenState extends State<RSAscreen> {
                             if (int.parse(value) < 0) {
                               return "key must be positive";
                             }
-                            // if (!isPrime(BigInt.parse(value))) {
-                            //   return "Key must be prime number";
-                            // }
+                            if (!RSA.isPrime(int.parse(value))) {
+                              return "P must be prime";
+                            }
 
                             return null;
                           },
                         ),
                       ),
                     ],
+                  ),
+                  SizedBox(height: 10),
+                  SizedBox(
+                    width: 150,
+                    child: TextFormField(
+                      controller: keyContoroller3,
+                      style: GoogleFonts.spaceMono(color: Colors.white),
+                      cursorColor: Appcolors.primaryColor,
+
+                      decoration: InputDecoration(
+                        labelText: "E Key",
+                        labelStyle: GoogleFonts.spaceMono(color: Colors.white),
+
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide(color: Appcolors.primaryColor),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide(color: Appcolors.primaryColor),
+                        ),
+                      ),
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please enter key B";
+                        }
+                        if (int.tryParse(value) == null) {
+                          return "Key must be a number";
+                        }
+                        if (int.parse(value) < 0) {
+                          return "key must be positive";
+                        }
+
+                        return null;
+                      },
+                    ),
                   ),
                 ],
               ),
@@ -218,15 +275,15 @@ class _RSAscreenState extends State<RSAscreen> {
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             setState(() {
-                              BigInt p = BigInt.parse(keyController.text);
-
-                              BigInt q = BigInt.parse(keyController2.text);
-
-                              // rsa = RSA(p, q);
-
-                              // encryptedData = rsa!.encrypt(textController.text);
-
-                              // result = encryptedData.join(" ");
+                              int p = int.parse(keyController.text);
+                              int q = int.parse(keyController2.text);
+                              int e = int.parse(keyContoroller3.text);
+                              result = RSA.encrypt(
+                                textController.text,
+                                p,
+                                q,
+                                e,
+                              );
                             });
                           }
                           ;
@@ -287,6 +344,7 @@ class _RSAscreenState extends State<RSAscreen> {
                         textController.clear();
                         keyController.clear();
                         keyController2.clear();
+                        keyContoroller3.clear();
                         result = '';
                       });
                     },

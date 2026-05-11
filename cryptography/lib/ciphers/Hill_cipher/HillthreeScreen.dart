@@ -1,5 +1,4 @@
 import 'package:Cipherium/ciphers/Hill_cipher/HillThreeXthree.dart';
-import 'package:Cipherium/ciphers/Hill_cipher/HillTwoXTwo.dart';
 import 'package:Cipherium/models/AppColors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,7 +11,6 @@ class HillThreeScreen extends StatefulWidget {
 }
 
 class _HillThreeScreenState extends State<HillThreeScreen> {
-  @override
   final _formKey = GlobalKey<FormState>();
 
   final textController = TextEditingController();
@@ -70,19 +68,21 @@ class _HillThreeScreenState extends State<HillThreeScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
-                    "The Hill Cipher is a polygraphic substitution cipher that uses matrix multiplication to encrypt pairs of letters.\n\n"
+                    "The Hill Cipher is a polygraphic substitution cipher that uses matrix multiplication to encrypt groups of three letters.\n\n"
                     "Encryption:\n"
                     "C = K × P (mod 26)\n\n"
                     "Where:\n"
-                    "K = 2×2 Key Matrix\n"
+                    "K = 3×3 Key Matrix\n"
                     "P = Plaintext Vector\n"
                     "C = Ciphertext Vector\n\n"
                     "Key Matrix:\n"
-                    "[ a  b ]\n"
-                    "[ c  d ]\n\n"
+                    "[ a  b  c ]\n"
+                    "[ d  e  f ]\n"
+                    "[ g  h  i ]\n\n"
                     "Ciphertext Equations:\n"
-                    "C1 = (a×x + b×y) mod 26\n"
-                    "C2 = (c×x + d×y) mod 26\n\n"
+                    "C1 = (a×x + b×y + c×z) mod 26\n"
+                    "C2 = (d×x + e×y + f×z) mod 26\n"
+                    "C3 = (g×x + h×y + i×z) mod 26\n\n"
                     "Decryption:\n"
                     "P = K⁻¹ × C (mod 26)\n\n"
                     "The determinant must satisfy:\n"

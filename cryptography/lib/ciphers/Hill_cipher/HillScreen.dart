@@ -12,7 +12,6 @@ class Hillscreen extends StatefulWidget {
 }
 
 class _HillscreenState extends State<Hillscreen> {
-  @override
   int selectedIndex = 0;
   List<Widget> screens = [HillTwoScreen(), HillThreeScreen()];
   Widget build(BuildContext context) {
