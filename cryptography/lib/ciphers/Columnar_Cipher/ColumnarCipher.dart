@@ -1,67 +1,103 @@
-String columnarEncrypt(String text, String key) {
-  text = text.replaceAll(' ', '');
-  int cols = key.length;
-  int rows = (text.length / cols).ceil();
+class ColumnarTranspositionCipher {
 
-  List<List<String>> grid =
-      List.generate(rows, (_) => List.filled(cols, ''));
+  // ================= ENCRYPT =================
+  static String encrypt(String text, String key) {
 
-  // fill grid row-wise
-  int index = 0;
-  for (int r = 0; r < rows; r++) {
-    for (int c = 0; c < cols; c++) {
-      if (index < text.length) {
-        grid[r][c] = text[index];
-        index++;
-      } else {
-        grid[r][c] = 'X'; // padding
+    text = text.replaceAll(" ", "").toUpperCase();
+    key = key.toUpperCase();
+
+    int cols = key.length;
+    int rows = (text.length / cols).ceil();
+
+    // إنشاء المصفوفة
+    List<List<String>> matrix =
+        List.generate(rows, (_) => List.filled(cols, 'X'));
+
+    // ملء المصفوفة بالنص
+    int index = 0;
+
+    for (int r = 0; r < rows; r++) {
+      for (int c = 0; c < cols; c++) {
+
+        if (index < text.length) {
+          matrix[r][c] = text[index];
+          index++;
+        }
+
       }
     }
-  }
 
-  // sort key with indexes
-  List<int> order = List.generate(cols, (i) => i);
-  order.sort((a, b) => key[a].compareTo(key[b]));
+    // ترتيب الأعمدة حسب الـ key
+    List<MapEntry<int, String>> order = [];
 
-  // read column-wise
-  String result = '';
-  for (int c in order) {
-    for (int r = 0; r < rows; r++) {
-      result += grid[r][c];
+    for (int i = 0; i < key.length; i++) {
+      order.add(MapEntry(i, key[i]));
     }
-  }
 
-  return result;
-}
-String columnarDecrypt(String cipher, String key) {
-  int cols = key.length;
-  int rows = (cipher.length / cols).ceil();
+    order.sort((a, b) => a.value.compareTo(b.value));
 
-  List<List<String>> grid =
-      List.generate(rows, (_) => List.filled(cols, ''));
+    // قراءة الأعمدة
+    String cipher = "";
 
-  // sort key indexes
-  List<int> order = List.generate(cols, (i) => i);
-  order.sort((a, b) => key[a].compareTo(key[b]));
+    for (var item in order) {
 
-  // fill column-wise
-  int index = 0;
-  for (int c in order) {
-    for (int r = 0; r < rows; r++) {
-      if (index < cipher.length) {
-        grid[r][c] = cipher[index];
-        index++;
+      int col = item.key;
+
+      for (int r = 0; r < rows; r++) {
+        cipher += matrix[r][col];
       }
     }
+
+    return cipher;
   }
 
-  // read row-wise
-  String result = '';
-  for (int r = 0; r < rows; r++) {
-    for (int c = 0; c < cols; c++) {
-      result += grid[r][c];
+  // ================= DECRYPT =================
+  static String decrypt(String cipher, String key) {
+
+    cipher = cipher.toUpperCase();
+    key = key.toUpperCase();
+
+    int cols = key.length;
+    int rows = (cipher.length / cols).ceil();
+
+    List<List<String>> matrix =
+        List.generate(rows, (_) => List.filled(cols, ''));
+
+    // ترتيب الأعمدة
+    List<MapEntry<int, String>> order = [];
+
+    for (int i = 0; i < key.length; i++) {
+      order.add(MapEntry(i, key[i]));
     }
-  }
 
-  return result.replaceAll('X', '');
+    order.sort((a, b) => a.value.compareTo(b.value));
+
+    // ملء الأعمدة
+    int index = 0;
+
+    for (var item in order) {
+
+      int col = item.key;
+
+      for (int r = 0; r < rows; r++) {
+
+        if (index < cipher.length) {
+          matrix[r][col] = cipher[index];
+          index++;
+        }
+
+      }
+    }
+
+    // قراءة الصفوف
+    String text = "";
+
+    for (int r = 0; r < rows; r++) {
+      for (int c = 0; c < cols; c++) {
+        text += matrix[r][c];
+      }
+    }
+
+    return text.replaceAll("X", "");
+  }
 }

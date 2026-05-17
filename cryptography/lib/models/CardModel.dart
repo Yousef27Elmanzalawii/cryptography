@@ -1,6 +1,4 @@
-import 'package:Cipherium/ciphers/AES_Cipher/AES_screen.dart';
 import 'package:Cipherium/ciphers/Columnar_Cipher/ColumnarScreen.dart';
-import 'package:Cipherium/ciphers/DES_Cipher/DES_Screen.dart';
 import 'package:Cipherium/ciphers/DiffieHellman_Ciphers/DiffieHellmanScreen.dart';
 import 'package:Cipherium/ciphers/Hash_Function/HashScreen.dart';
 import 'package:Cipherium/ciphers/Hill_cipher/HillScreen.dart';
@@ -71,16 +69,9 @@ class cardModel {
       page: Diffiehellmanscreen(),
     ),
     cardModel(
-      image: "assets/CrptoImg/AES.png",
-      title: "AES Cipher",
-      page: AesScreen(),
+      image: "assets/CrptoImg/Hash.jpg",
+      title: "Hash Function",
+      page: Hashscreen(),
     ),
-    cardModel(
-      image: "assets/CrptoImg/DES.jpg",
-      title: "DES Cipher",
-      page: DesScreen(),
-    ),
-    cardModel(image: "assets/CrptoImg/Hash.jpg", title: "Hash Function", page: Hashscreen())
   ];
-  
 }

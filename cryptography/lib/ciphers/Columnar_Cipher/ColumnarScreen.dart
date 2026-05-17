@@ -147,7 +147,7 @@ class _ColumnarscreenState extends State<Columnarscreen> {
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             setState(() {
-                              result = columnarEncrypt(
+                              result = ColumnarTranspositionCipher.encrypt(
                                 textController.text,
                                 keyController.text,
                               );
@@ -175,7 +175,7 @@ class _ColumnarscreenState extends State<Columnarscreen> {
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             setState(() {
-                              result = columnarDecrypt(
+                              result = ColumnarTranspositionCipher.decrypt(
                                 textController.text,
                                 keyController.text,
                               );

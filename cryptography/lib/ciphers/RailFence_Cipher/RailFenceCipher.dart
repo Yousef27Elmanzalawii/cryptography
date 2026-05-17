@@ -15,7 +15,11 @@ String encryptRailFence(String text, int key) {
       down = false;
     }
 
-    row += down ? 1 : -1;
+    if (down) {
+  row++;
+} else {
+  row--;
+}
   }
 
   return rail.join();
@@ -39,7 +43,12 @@ String decryptRailFence(String cipher, int key) {
       down = false;
     }
 
-    row += down ? 1 : -1;
+    
+    if (down) {
+  row++;
+} else {
+  row--;
+}
   }
 
   //
